@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Assume one extra point around (0,0)
+
+long long  areaPolygon(vector<pair<int,int> >&v, int i, int j)
+{
+    int length = j-i+1;
+    if(length == 2)
+    {
+        long long ans = v[i].first*v[j].second - v[j].first*v[i].second;
+        cout<<ans<<" ";
+        return ans;
+    }
+    int mid = (i+j)/2;
+    long long area1 = areaPolygon(v,i,mid);
+    long long area2 = areaPolygon(v,mid,j);
+
+    return area1 + area2;
+}
+
+int main(){
+
+    int n;
+    cin>>n;
+    vector<pair<int, int > >v;
+    int x,y;
+    // Enter the points of the polygon in either clockwise or anticlockwise direction
+
+    for(int i=0;i<n;i++)
+    {
+        cin>>x>>y;
+        v.push_back({x,y});
+    }
+    v.push_back(v[0]);
+    
+    int ans=areaPolygon(v,0,n);
+    ans/=2.0;
+    cout<<ans<<endl;
+    return 0;
+}
